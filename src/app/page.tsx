@@ -1,65 +1,85 @@
-import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <>
+      {/* Hero */}
+      <section className="bg-gradient-to-br from-green-600 to-emerald-700 text-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+          <div className="flex justify-center mb-6 text-6xl">🐕</div>
+          <h1 className="text-3xl md:text-5xl font-bold text-center leading-tight mb-5">
+            愛犬に合うトリミングサロンを<br />かんたん検索
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-green-100 text-lg text-center mb-10 max-w-xl mx-auto">
+            地域・犬種・サービスで絞り込み。<br className="sm:hidden" />
+            レビューと料金を比較して、最高のサロンを見つけよう。
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+
+          {/* Search Box (UI only — 機能はsalons/page.tsxで実装) */}
+          <div className="max-w-2xl mx-auto bg-white rounded-2xl p-2 flex flex-col sm:flex-row gap-2 shadow-lg">
+            <input
+              type="text"
+              placeholder="エリアを入力（例：渋谷区）"
+              className="flex-1 px-4 py-3 text-gray-800 text-sm rounded-xl focus:outline-none"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <Link
+              href="/salons"
+              className="px-8 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors text-center whitespace-nowrap"
+            >
+              サロンを探す
+            </Link>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">トリムDBの特徴</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            {
+              icon: "🔍",
+              title: "多彩な検索条件",
+              desc: "エリア・犬種・料金・営業時間など、細かい条件でサロンを絞り込めます。",
+            },
+            {
+              icon: "⭐",
+              title: "リアルなレビュー",
+              desc: "実際に利用したユーザーの口コミ・評価を参考にサロンを選べます。",
+            },
+            {
+              icon: "📋",
+              title: "サービス・料金を比較",
+              desc: "トリミングのメニューや料金をサロンごとに比較できます。",
+            },
+          ].map((f) => (
+            <div key={f.title} className="bg-white rounded-2xl p-8 shadow-sm text-center">
+              <div className="text-4xl mb-4">{f.icon}</div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">{f.title}</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Salon Owner CTA */}
+      <section className="bg-green-50 py-16">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">サロンオーナーの方へ</h2>
+          <p className="text-gray-600 mb-8 text-sm leading-relaxed">
+            あなたのサロンを無料で掲載できます。<br />
+            多くのペットオーナーにサービスを届けましょう。
+          </p>
+          <Link
+            href="/register"
+            className="inline-block px-10 py-3 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-colors"
+          >
+            サロンを無料登録する
+          </Link>
+        </div>
+      </section>
+    </>
   );
 }
