@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { Dog, Search, UserPlus, LogIn, Menu, X } from "lucide-react";
 
 const navLinks = [
   { href: "/salons", label: "サロンを探す" },
+  { href: "/breeds", label: "犬種ガイド" },
+  { href: "/guide", label: "はじめてガイド" },
   { href: "/register", label: "サロンを登録" },
 ];
 
@@ -16,8 +19,8 @@ export default function Header() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <span className="text-2xl">🐕</span>
-            <span className="font-bold text-gray-900 text-lg">トリムDB</span>
+            <Dog className="h-6 w-6 text-green-600" />
+            <span className="font-bold text-gray-900 text-lg">うちの犬スタイル</span>
             <span className="text-xs text-gray-400 font-normal hidden sm:inline">by ミチビキ</span>
           </Link>
 
@@ -50,9 +53,7 @@ export default function Header() {
             onClick={() => setIsOpen(!isOpen)}
             aria-label="メニュー"
           >
-            <div className="w-6 h-0.5 bg-current mb-1.5" />
-            <div className="w-6 h-0.5 bg-current mb-1.5" />
-            <div className="w-6 h-0.5 bg-current" />
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
 
