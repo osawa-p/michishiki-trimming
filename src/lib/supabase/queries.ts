@@ -21,7 +21,10 @@ export async function getPrefectures(): Promise<Prefecture[]> {
     .from("prefectures")
     .select("*")
     .order("id");
-  if (error) throw error;
+  if (error) {
+    console.error("getPrefectures error:", error.message);
+    return [];
+  }
   return data ?? [];
 }
 
@@ -46,7 +49,10 @@ export async function getCitiesByPrefecture(
     .select("*")
     .eq("prefecture_id", prefectureId)
     .order("slug");
-  if (error) throw error;
+  if (error) {
+    console.error("getCitiesByPrefecture error:", error.message);
+    return [];
+  }
   return data ?? [];
 }
 
@@ -122,7 +128,10 @@ export async function getSalonsByPrefecture(
     .order("created_at", { ascending: false })
     .range(from, to);
 
-  if (error) throw error;
+  if (error) {
+    console.error("getSalonsByPrefecture error:", error.message);
+    return { salons: [], total: 0 };
+  }
   return { salons: (data as Salon[]) ?? [], total: count ?? 0 };
 }
 
@@ -147,7 +156,10 @@ export async function getSalonsByCity(
     .order("created_at", { ascending: false })
     .range(from, to);
 
-  if (error) throw error;
+  if (error) {
+    console.error("getSalonsByCity error:", error.message);
+    return { salons: [], total: 0, city: cityData, prefecture: cityData.prefectures };
+  }
   return {
     salons: (data as Salon[]) ?? [],
     total: count ?? 0,
@@ -171,7 +183,8 @@ export async function searchSalons(
     .order("created_at", { ascending: false });
 
   if (q) {
-    query = query.or(`name.ilike.%${q}%,address.ilike.%${q}%`);
+    const escaped = q.replace(/[%_]/g, "\\$&");
+    query = query.or(`name.ilike.%${escaped}%,address.ilike.%${escaped}%`);
   }
 
   if (prefecture) {
@@ -197,7 +210,10 @@ export async function searchSalons(
   query = query.range(from, to);
   const { data, count, error } = await query;
 
-  if (error) throw error;
+  if (error) {
+    console.error("searchSalons error:", error.message);
+    return { salons: [], total: 0 };
+  }
   return { salons: (data as Salon[]) ?? [], total: count ?? 0 };
 }
 
@@ -211,7 +227,10 @@ export async function getDogBreeds(): Promise<DogBreed[]> {
     .from("dog_breeds")
     .select("*")
     .order("sort_order");
-  if (error) throw error;
+  if (error) {
+    console.error("getDogBreeds error:", error.message);
+    return [];
+  }
   return (data as DogBreed[]) ?? [];
 }
 
@@ -221,7 +240,10 @@ export async function getFeatures(): Promise<Feature[]> {
     .from("features")
     .select("*")
     .order("id");
-  if (error) throw error;
+  if (error) {
+    console.error("getFeatures error:", error.message);
+    return [];
+  }
   return data ?? [];
 }
 
@@ -238,7 +260,10 @@ export async function getSalonCountByPrefecture(): Promise<
     .select("prefecture_id")
     .not("prefecture_id", "is", null);
 
-  if (error) throw error;
+  if (error) {
+    console.error("getSalonCountByPrefecture error:", error.message);
+    return [];
+  }
   if (!data) return [];
 
   const counts = new Map<number, number>();
@@ -263,7 +288,10 @@ export async function getSalonCountByCity(
     .eq("prefecture_id", prefectureId)
     .not("city_id", "is", null);
 
-  if (error) throw error;
+  if (error) {
+    console.error("getSalonCountByCity error:", error.message);
+    return [];
+  }
   if (!data) return [];
 
   const counts = new Map<number, number>();
