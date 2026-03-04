@@ -19,7 +19,8 @@ import {
   Cat,
   DoorOpen,
 } from "lucide-react";
-import { getSalonById } from "@/lib/supabase/queries";
+import { getSalonById, getExternalReviews } from "@/lib/supabase/queries";
+import GoogleReviews from "@/components/GoogleReviews";
 import {
   generateSalonJsonLd,
   generateBreadcrumbJsonLd,
@@ -161,6 +162,10 @@ export default async function SalonDetailPage({ params }: Props) {
       if (data && data.length > 0) nearbySalons = data as Salon[];
     }
   }
+
+  // ---- Google reviews ----
+  const googleReviews = await getExternalReviews(salon.id);
+  const googleOnlyReviews = googleReviews.filter((r) => r.source === "google");
 
   // ---- Breadcrumb ----
   const breadcrumbItems = [
@@ -584,6 +589,14 @@ export default async function SalonDetailPage({ params }: Props) {
           </div>
         )}
       </div>
+
+      {/* ===== 7.5 Google Reviews ===== */}
+      <GoogleReviews
+        reviews={googleOnlyReviews}
+        googleRating={salon.google_rating}
+        googleReviewCount={salon.google_review_count}
+        googlePlaceId={salon.google_place_id}
+      />
 
       {/* ===== 8. FAQ ===== */}
       <div className="bg-white rounded-2xl shadow-sm p-8 mb-6">
