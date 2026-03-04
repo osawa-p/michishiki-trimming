@@ -8,6 +8,7 @@ import type {
   Feature,
   Service,
   Review,
+  ExternalReview,
   SearchParams,
 } from "@/lib/types/database";
 
@@ -304,4 +305,42 @@ export async function getSalonCountByCity(
     city_id,
     count,
   }));
+}
+
+// ========================================
+// 外部レビュー（Google口コミ等）
+// ========================================
+
+export async function getExternalReviews(salonId: string): Promise<ExternalReview[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("external_reviews")
+    .select("*")
+    .eq("salon_id", salonId)
+    .order("published_at", { ascending: false });
+  if (error) {
+    console.error("getExternalReviews error:", error.message);
+    return [];
+  }
+  return data ?? [];
+}
+
+export async function upsertSalonGoogleData(
+  salonId: string,
+  googleData: {
+    google_place_id: string;
+    google_rating: number | null;
+    google_review_count: number | null;
+    google_photos: string[];
+  }
+): Promise<void> {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("salons")
+    .update({
+      ...googleData,
+      last_scraped_at: new Date().toISOString(),
+    })
+    .eq("id", salonId);
+  if (error) console.error("upsertSalonGoogleData error:", error.message);
 }

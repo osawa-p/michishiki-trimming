@@ -34,6 +34,11 @@ export type Salon = {
   image_url: string | null;
   website_url: string | null;
   owner_id: string | null;
+  google_place_id: string | null;
+  google_rating: number | null;
+  google_review_count: number | null;
+  google_photos: string[] | null;
+  last_scraped_at: string | null;
   created_at: string;
   updated_at: string | null;
 };
@@ -45,6 +50,7 @@ export type SalonWithRelations = Salon & {
   salon_breeds?: { dog_breeds: DogBreed }[];
   services?: Service[];
   reviews?: Review[];
+  external_reviews?: ExternalReview[];
 };
 
 export type DogBreed = {
@@ -78,6 +84,20 @@ export type Profile = {
   id: string;
   display_name: string | null;
   avatar_url: string | null;
+  created_at: string;
+};
+
+export type ExternalReview = {
+  id: number;
+  salon_id: string;
+  source: 'google' | string;
+  source_review_id: string | null;
+  author_name: string;
+  author_photo_url: string | null;
+  rating: number;
+  text: string | null;
+  published_at: string | null;
+  language: string;
   created_at: string;
 };
 
