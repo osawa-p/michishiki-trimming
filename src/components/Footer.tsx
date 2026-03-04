@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Dog } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -7,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <p className="text-white font-bold text-lg flex items-center gap-2 mb-3">
-              <span>🐕</span> トリムDB
+              <Dog className="h-5 w-5" /> うちの犬スタイル
             </p>
             <p className="text-sm leading-relaxed">
               犬のトリミングサロンを<br />
@@ -19,9 +20,10 @@ export default function Footer() {
             <p className="text-white font-semibold mb-3">メニュー</p>
             <ul className="space-y-2 text-sm">
               <li><Link href="/salons" className="hover:text-white transition-colors">サロンを探す</Link></li>
+              <li><Link href="/breeds" className="hover:text-white transition-colors">犬種別ガイド</Link></li>
+              <li><Link href="/guide" className="hover:text-white transition-colors">はじめてのトリミング</Link></li>
+              <li><Link href="/price-simulator" className="hover:text-white transition-colors">料金シミュレーター</Link></li>
               <li><Link href="/register" className="hover:text-white transition-colors">サロンを登録する</Link></li>
-              <li><Link href="/auth/login" className="hover:text-white transition-colors">ログイン</Link></li>
-              <li><Link href="/auth/signup" className="hover:text-white transition-colors">新規登録</Link></li>
             </ul>
           </div>
           <div>

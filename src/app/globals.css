@@ -9,6 +9,10 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-noto-sans-jp);
+  --color-brand: #059669;
+  --color-brand-dark: #047857;
+  --color-brand-light: #d1fae5;
+  --color-rating: #f59e0b;
 }
 
 body {

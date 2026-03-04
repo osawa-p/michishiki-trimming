@@ -1,4 +1,4 @@
-# 犬のトリミングサロン検索サイト（トリムDB）
+# 犬のトリミングサロン検索サイト（うちの犬スタイル）
 
 ## プロジェクト概要
 - **リポジトリ**: https://github.com/osawa-p/michishiki-trimming
